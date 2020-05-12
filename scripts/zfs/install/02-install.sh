@@ -109,13 +109,13 @@ arch-chroot /mnt /bin/passwd
 
 # Set user passwd
 print "Set user password"
-arch-chroot /mnt /bin/passwd user
+arch-chroot /mnt /bin/passwd matthewschrader
 
 # Configure sudo
 print "Configure sudo"
 cat > /mnt/etc/sudoers <<"EOF"
 root ALL=(ALL) ALL
-user ALL=(ALL) ALL
+matthewschrader ALL=(ALL) ALL
 Defaults rootpw
 EOF
 
