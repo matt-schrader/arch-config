@@ -121,40 +121,19 @@ EOF
 
 # Configure network
 print "Configure networking"
-cat > /mnt/etc/systemd/network/br0.netdev <<"EOF"
-[NetDev]
-Name=br0
-Kind=bridge
-EOF
-cat > /mnt/etc/systemd/network/br0.network <<"EOF"
-[Match]
-Name=br0
-
-[Network]
-DHCP=ipv4
-IPForward=kernel
-
-[DHCP]
-UseDNS=true
-RouteMetric=10
-EOF
 cat > /mnt/etc/systemd/network/enoX.network <<"EOF"
 [Match]
 Name=en*
 
 [Network]
-Bridge=br0
+MulticastDNS=yes
+DHCP=ipv4
 IPForward=kernel
 
 [DHCP]
+UseDomains=yes
+UseDNS=true
 RouteMetric=10
-EOF
-cat > /mnt/etc/systemd/network/wlX.network <<"EOF"
-[Match]
-Name=wl*
-
-[DHCP]
-RouteMetric=20
 EOF
 systemctl enable systemd-networkd --root=/mnt
 systemctl enable connman --root=/mnt
