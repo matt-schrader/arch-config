@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-curl -s https://github.com/matt-schrader/archiso-zfs/init | bash -x
+curl -s https://github.com/matt-schrader/archiso-zfs/init | bash
