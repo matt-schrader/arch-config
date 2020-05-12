@@ -9,11 +9,11 @@ print () {
 # Sort mirrors
 print "Sort mirrors"
 pacman -Sy reflector --noconfirm
-reflector --country France --country Germany --latest 6 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country "United States"  --latest 6 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 # Install
 print "Install Arch Linux"
-pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware intel-ucode efibootmgr vim git ansible connman wpa_supplicant
+pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-ucode efibootmgr vim git ansible connman 
 
 # Generate fstab excluding ZFS entries
 print "Generate fstab excluding ZFS entries"
@@ -34,14 +34,14 @@ EOF
 
 # Prepare locales and keymap
 print "Prepare locales and keymap"
-echo "KEYMAP=fr" > /mnt/etc/vconsole.conf
-sed -i 's/#\(fr_FR.UTF-8\)/\1/' /mnt/etc/locale.gen
-echo 'LANG="fr_FR.UTF-8"' > /mnt/etc/locale.conf
+echo "KEYMAP=us" > /mnt/etc/vconsole.conf
+sed -i 's/#\(en_US.UTF-8\)/\1/' /mnt/etc/locale.gen
+echo 'LANG="en_US.UTF-8"' > /mnt/etc/locale.conf
 
 # Prepare initramfs
 print "Prepare initramfs"
 cat > /mnt/etc/mkinitcpio.conf <<"EOF"
-MODULES=(i915 intel_agp)
+MODULES=()
 BINARIES=()
 FILES=()
 HOOKS=(base udev autodetect modconf block keyboard keymap zfs filesystems)
@@ -99,7 +99,7 @@ EOSF
   bootctl --path=/efi update
 
   # Create user
-  useradd -m user
+  useradd -m matthewschrader
 
 EOF
 
