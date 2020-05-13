@@ -36,6 +36,8 @@
 - name: install applications packages
   pacman:
     name:
+      - arduino
+      - arduino-docs
       - imv # img visualizer
       - kitty # terminal emulator
       - code # code editor
@@ -116,5 +118,5 @@
 - name: Add user groups
   user:
     name: '{{user}}'
-    groups: android-sdk,wheel,input,uucp,storage
+    groups: android-sdk,wheel,input,uucp,storage,lock
     append: yes
