@@ -10,9 +10,9 @@
   pre_tasks:
 
     # Fix full /tmp when installing lots of AUR
-    - name: temp increase /tmp size
-      tags: always
-      shell: mount -o remount,size=10G,noatime /tmp
+    #- name: temp increase /tmp size
+    #  tags: always
+    #  shell: mount -o remount,size=10G,noatime /tmp
 
     - name: include guest role
       tags: guest
