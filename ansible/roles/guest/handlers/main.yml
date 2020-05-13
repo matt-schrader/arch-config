@@ -1,4 +1,8 @@
 ---
+- name: enable sshd
+  systemd:
+    name: sshd
+    enabled: yes
 - name: restart sshd
   systemd:
     name: sshd
