@@ -12,7 +12,7 @@
     # Fix full /tmp when installing lots of AUR
     - name: temp increase /tmp size
       tags: always
-      shell: mount -o remount,size=5G,noatime /tmp
+      shell: mount -o remount,size=10G,noatime /tmp
 
     - name: include guest role
       tags: guest
