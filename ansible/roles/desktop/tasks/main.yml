@@ -98,6 +98,7 @@
       - otf-font-awesome
       - pastel # color viewer
       - spotify # music player
+      - teams # Microsoft Teams
         #- tiny-irc-client-git
       - starleaf-breeze
       - zoom
