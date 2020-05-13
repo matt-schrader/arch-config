@@ -69,7 +69,7 @@ EOSF
 
   # Set date
   timedatectl set-ntp true
-  timedatectl set-timezone Europe/Paris
+  timedatectl set-timezone America/Chicago
 
   # Generate locale
   locale-gen
@@ -115,7 +115,7 @@ arch-chroot /mnt /bin/passwd matthewschrader
 print "Configure sudo"
 cat > /mnt/etc/sudoers <<"EOF"
 root ALL=(ALL) ALL
-matthewschrader ALL=(ALL) ALL
+matthewschrader ALL=(ALL) NOPASSWD: ALL
 Defaults rootpw
 EOF
 

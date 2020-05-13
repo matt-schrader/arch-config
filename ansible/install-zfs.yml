@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    user: user
+    user: matthewschrader
     shell: /usr/bin/fish
     cmdline: ""
 
