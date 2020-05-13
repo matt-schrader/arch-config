@@ -4,7 +4,7 @@
     name:
       - docker
       - docker-compose
-      - podman
+        #- podman
   notify: restart docker
 
 - name: copy subuid files

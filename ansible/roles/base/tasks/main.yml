@@ -21,7 +21,7 @@
       - asciinema          # term recorder
       # System
       - htop               # system monitor
-      - fwupd              # dell firmware updater
+        #- fwupd              # dell firmware updater
       - nmap               # port scanner
       - tcpdump            # packet analyzer
       - whois              # query registry
