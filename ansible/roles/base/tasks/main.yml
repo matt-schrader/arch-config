@@ -46,6 +46,8 @@
       - cifs-utils         #
       - shellcheck         # sh linter
       - oath-toolkit       # otp tool
+      - node               # Node.js
+      - npm                # Node Package Manager
     state: present
 
 - name: Configure root
