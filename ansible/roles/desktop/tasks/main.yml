@@ -76,6 +76,13 @@
     skip_installed: true
     name:
       - adapta-gtk-theme #https://github.com/Alexays/Waybar/issues/515
+      - android-sdk
+      - android-sdk-build-tools
+      - android-sdk-platform-tools
+      - android-platform
+      - android-emulator
+      - android-support-repository
+      - android-studio
       - equilux-theme 
       #- wdisplays-git # arandr for wayland
       - wf-recorder-git # screen recorder for wayland
@@ -102,3 +109,12 @@
         #- tiny-irc-client-git
       - starleaf-breeze
       - zoom
+- name: Ensure group "android-sdk" exists
+  group:
+    name: android-sdk
+    state: present
+- name: Add user groups
+  user:
+    name: '{{user}}'
+    groups: android-sdk,wheel,input,uucp,storage
+    append: yes
