@@ -3,7 +3,7 @@
   tags: always
   lineinfile:
     path: /etc/sudoers
-    line: '{{user}} ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    line: '{{user}} ALL=(ALL) NOPASSWD: ALL'
 
 - name: install AUR helper
   become: no
