@@ -46,7 +46,7 @@
       - cifs-utils         #
       - shellcheck         # sh linter
       - oath-toolkit       # otp tool
-      - node               # Node.js
+      - nodejs             # Node.js
       - npm                # Node Package Manager
     state: present
 
