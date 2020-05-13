@@ -4,11 +4,4 @@
     name: openssh
     state: present
 
-- name: configure SSHD
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^#PermitRootLogin'
-    line: 'PermitRootLogin yes'
-  notify: restart sshd
-
 - meta: flush_handlers
