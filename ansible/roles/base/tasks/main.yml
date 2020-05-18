@@ -1,4 +1,11 @@
 ---
+- name: install aur packages
+  become: no
+  aur:
+    skip_installed: true
+    name:
+      - starship-bin
+
 - name: install base packages
   pacman:
     name:
@@ -19,9 +26,13 @@
       - man                #
       - screen             # terminal multiplexer
       - asciinema          # term recorder
+      - expect             # automation tool
+      - arch-audit         # list vulnerabilities
       # System
       - htop               # system monitor
+      - reflector          # mirror sorter
         #- fwupd              # dell firmware updater
+      - fwupd              # dell firmware updater
       - nmap               # port scanner
       - tcpdump            # packet analyzer
       - whois              # query registry
@@ -37,6 +48,7 @@
       - openbsd-netcat     # network utility
       - speedtest-cli      # 
       # Utils
+      - borgbackup         # backup utility
       - rsync              #
       - rclone             # 
       - words              # dictionnaries
@@ -51,6 +63,8 @@
       - npm                # Node Package Manager
       - yarn
       - watchman
+      - python2-pip        # python2 package manager
+      - python-pip        # python3 package manager
     state: present
 
 - name: Configure root

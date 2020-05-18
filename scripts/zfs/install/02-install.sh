@@ -54,14 +54,14 @@ print "Chroot and configure system"
 arch-chroot /mnt /bin/bash -xe <<"EOF"
 
   # ZFS deps
+  pacman-key --recv-keys F75D9D76 --keyserver hkp://pool.sks-keyservers.net:80
+  pacman-key --lsign-key F75D9D76
   cat >> /etc/pacman.conf <<"EOSF"
 [archzfs]
 Server = http://archzfs.com/archzfs/x86_64
 Server = http://mirror.sum7.eu/archlinux/archzfs/archzfs/x86_64
 Server = https://mirror.biocrafting.net/archlinux/archzfs/archzfs/x86_64
 EOSF
-  pacman-key --recv-keys F75D9D76
-  pacman-key --lsign-key F75D9D76
   pacman -Syu zfs-dkms zfs-utils
 
   # Sync clock
@@ -128,14 +128,25 @@ Name=en*
 [Network]
 MulticastDNS=yes
 DHCP=ipv4
-IPForward=kernel
+IPForward=yes
 
 [DHCP]
 UseDomains=yes
-UseDNS=true
+UseDNS=yes
 RouteMetric=10
 EOF
+
 systemctl enable systemd-networkd --root=/mnt
+systemctl disable systemd-networkd-wait-online --root=/mnt
+
+cat > /mnt/etc/connman/main.conf <<"EOF"
+[General]
+PreferredTechnologies=ethernet,wifi
+NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,ve-,vb-,docker,veth,eth,wlan
+AllowHostnameUpdates = false
+AllowDomainnameUpdates = false
+SingleConnectedTechnology = true
+EOF
 systemctl enable connman --root=/mnt
 
 # Configure DNS
@@ -143,10 +154,6 @@ print "Configure DNS"
 rm /mnt/etc/resolv.conf
 ln -s /run/systemd/resolve/resolv.conf /mnt/etc/resolv.conf
 systemctl enable systemd-resolved --root=/mnt
-
-# Configure TRIM
-print "Configure TRIM"
-systemctl enable fstrim.timer --root=/mnt
 
 # Activate zfs
 print "Configure ZFS"

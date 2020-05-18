@@ -6,11 +6,12 @@
       - swaybg
       - xorg-server-xwayland
       - waybar
-      - mako
+      - mako # notification daemon
       - kanshi # autorandr for wayland
       - grim # screenshots
       - slurp # region selector
       - wl-clipboard # clipboard manager
+      - brightnessctl # brightness manager
       - swayidle
       - xdg-user-dirs
     state: present
@@ -21,6 +22,8 @@
       - mesa
       - mesa-demos
       - lib32-virtualgl
+      - vulkan-intel
+      - lib32-vulkan-intel
     state: present
 
 - name: install audio packages
@@ -47,6 +50,7 @@
       - firefox-i18n-fr
       - gimp # img editor
       - kolourpaint # img editor
+      - shotwell # photo manager
       - lollypop # music player
       - lxappearance # theme manager
       - mpv # video player
@@ -66,10 +70,8 @@
   become: no
   shell: gpg --recv '{{item}}'
   loop:
-    # spotify
-    - 4773BD5E130D1D45
-    # wob
-    - F4B432D5D67990E3
+    - 4773BD5E130D1D45 # spotify
+    - F4B432D5D67990E3 # wob
 
   changed_when: false
 
@@ -87,7 +89,7 @@
       - android-support-repository
       - android-studio
       - equilux-theme 
-      #- wdisplays-git # arandr for wayland
+      - wdisplays-git # arandr for wayland
       - wf-recorder-git # screen recorder for wayland
       - grimshot-git # grim+slurp wrapper
       - wofi-hg # rofi for wayland
@@ -96,15 +98,12 @@
       - connman-gtk # connman gtk gui
       - gnome-ssh-askpass2 # ssh askpass gui
       - google-chrome
-      - laptop-mode-tools
       - adb-sync-git # android dir sync
       - downgrade # package downgrader
       - lf # cli file manager
-      - light-git # brightness manager
       - mindustry-bin # game
       - minecraft-launcher # game
       - molotov # french tv wrapper
-      - openvpn-update-systemd-resolved # TORM ?
       - otf-font-awesome
       - pastel # color viewer
       - spotify # music player

@@ -109,42 +109,42 @@ Defaults rootpw
 EOF
 
 # Configure network
-cat > /mnt/etc/systemd/network/br0.netdev <<"EOF"
-[NetDev]
-Name=br0
-Kind=bridge
-EOF
-cat > /mnt/etc/systemd/network/br0.network <<"EOF"
-[Match]
-Name=br0
-
-[Network]
-DHCP=ipv4
-IPForward=kernel
-
-[DHCP]
-UseDNS=true
-RouteMetric=10
-EOF
+print "Configure network"
 cat > /mnt/etc/systemd/network/enoX.network <<"EOF"
 [Match]
 Name=en*
 
 [Network]
-Bridge=br0
-IPForward=kernel
+DHCP=ipv4
+IPForward=yes
 
 [DHCP]
+UseDNS=no
 RouteMetric=10
 EOF
 cat > /mnt/etc/systemd/network/wlX.network <<"EOF"
 [Match]
 Name=wl*
 
+[Network]
+DHCP=ipv4
+IPForward=yes
+
 [DHCP]
+UseDNS=no
 RouteMetric=20
 EOF
 systemctl enable systemd-networkd --root=/mnt
+systemctl disable systemd-networkd-wait-online --root=/mnt
+
+cat > /mnt/etc/connman/main.conf <<"EOF"
+[General]
+PreferredTechnologies=ethernet,wifi
+NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,ve-,vb-,docker,veth,eth,wlan
+AllowHostnameUpdates = false
+AllowDomainnameUpdates = false
+SingleConnectedTechnology = true
+EOF
 systemctl enable connman --root=/mnt
 
 # Configure DNS
