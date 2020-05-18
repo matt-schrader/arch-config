@@ -44,10 +44,13 @@
       - neofetch           #
       - unzip              # uncompress zip
       - cifs-utils         #
+      - nfs-utils
       - shellcheck         # sh linter
       - oath-toolkit       # otp tool
       - nodejs             # Node.js
       - npm                # Node Package Manager
+      - yarn
+      - watchman
     state: present
 
 - name: Configure root

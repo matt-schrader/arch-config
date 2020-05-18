@@ -38,6 +38,7 @@
     name:
       - arduino
       - arduino-docs
+      - discord
       - imv # img visualizer
       - kitty # terminal emulator
       - code # code editor
