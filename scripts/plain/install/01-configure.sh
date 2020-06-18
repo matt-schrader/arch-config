@@ -157,7 +157,7 @@ options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
 EOSF
 
   # Create user
-	useradd -mU -G lock,docker,wheel,uucp,video,audio,storage,games,input "$user"
+	useradd -mU -G lock,wheel,uucp,video,audio,storage,games,input "$user"
 
 EOF
 
