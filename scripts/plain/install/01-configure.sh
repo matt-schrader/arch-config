@@ -162,7 +162,8 @@ EOF
 arch-chroot /mnt useradd -mU -G lock,wheel,uucp,video,audio,storage,games,input "$user"
 
 echo "$user:$password" | chpasswd --root /mnt
-echo "root:$password" | chpasswd --root /mnt
+
+arch-chroot /mnt /bin/passwd
 
 # Configure sudo
 print "Configure sudo"
