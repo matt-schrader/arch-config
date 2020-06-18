@@ -161,9 +161,13 @@ EOF
 # Create user
 arch-chroot /mnt useradd -mU -G lock,wheel,uucp,video,audio,storage,games,input "$user"
 
-echo "$user:$password" | chpasswd --root /mnt
-
+# Set root passwd
+print "Set root password"
 arch-chroot /mnt /bin/passwd
+
+# Set user passwd
+print "Set user password"
+arch-chroot /mnt /bin/passwd $user
 
 # Configure sudo
 print "Configure sudo"
