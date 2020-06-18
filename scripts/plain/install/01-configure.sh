@@ -141,7 +141,7 @@ arch-chroot /mnt /bin/bash -xe <<"EOF"
   mkinitcpio -P
 
   # Install bootloader
-  bootctl --path=/mnt install
+  bootctl --path=/boot install
 
   # Generates boot entries
   mkdir -p /boot/loader/entries
