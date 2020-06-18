@@ -39,7 +39,6 @@ exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
 # EFI part
-print "Creating EFI part"
 ### Setup the disk and partitions ###
 swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
 swap_end=$(( $swap_size + 129 + 1 ))MiB
@@ -142,15 +141,15 @@ arch-chroot /mnt /bin/bash -xe <<"EOF"
   mkinitcpio -P
 
   # Install bootloader
-  bootctl --path=/efi install
+  bootctl --path=/mnt install
 
   # Generates boot entries
-  mkdir -p /efi/loader/entries
+  mkdir -p /boot/loader/entries
 	cat > /boot/loader/loader.conf <<"EOSF"
 default arch
 EOSF
 
-  cat > /mnt/boot/loader/entries/arch.conf <<"EOSF"
+  cat > /boot/loader/entries/arch.conf <<"EOSF"
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
