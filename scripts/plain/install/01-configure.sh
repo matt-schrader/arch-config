@@ -204,10 +204,11 @@ EOF
 systemctl enable connman --root=/mnt
 
 # Configure DNS
-print "Configure DNS"
-rm /mnt/etc/resolv.conf
-ln -s /run/systemd/resolve/resolv.conf /mnt/etc/resolv.conf
-systemctl enable systemd-resolved --root=/mnt
+# Might need to add floonetwork to resolv.conf
+#print "Configure DNS"
+#rm /mnt/etc/resolv.conf
+#ln -s /run/systemd/resolve/resolv.conf /mnt/etc/resolv.conf
+#systemctl enable systemd-resolved --root=/mnt
 
 # Finish
 echo -e "\e[32mAll OK"
