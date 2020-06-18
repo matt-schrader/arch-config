@@ -156,10 +156,10 @@ initrd   /initramfs-linux.img
 options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
 EOSF
 
-  # Create user
-	useradd -mU -G lock,wheel,uucp,video,audio,storage,games,input "$user"
-
 EOF
+
+# Create user
+arch-chroot /mnt useradd -mU -G lock,wheel,uucp,video,audio,storage,games,input "$user"
 
 echo "$user:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
