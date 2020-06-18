@@ -61,7 +61,7 @@ wipefs "${part_root}"
 
 mkfs.fat -F32 "${part_boot}"
 mkswap "${part_swap}"
-mkfs.ext4 -f "${part_root}"
+mkfs.ext4 "${part_root}"
 
 swapon "${part_swap}"
 mount "${part_root}" /mnt
@@ -75,7 +75,7 @@ reflector --country "United States"  --latest 6 --protocol https --sort rate --s
 
 # Install
 print "Install Arch Linux"
-pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-ucode efibootmgr vim git ansible connman 
+pacstrap /mnt base base-devel linux linux-headers linux-firmware amd-ucode efibootmgr vim git ansible connman 
 
 # Generate fstab 
 print "Generate fstab"
@@ -104,16 +104,6 @@ echo "KEYMAP=us" > /mnt/etc/vconsole.conf
 sed -i 's/#\(en_US.UTF-8\)/\1/' /mnt/etc/locale.gen
 echo 'LANG="en_US.UTF-8"' > /mnt/etc/locale.conf
 
-# Prepare initramfs
-print "Prepare initramfs"
-cat > /mnt/etc/mkinitcpio.conf <<"EOF"
-MODULES=()
-BINARIES=()
-FILES=()
-HOOKS=(base udev autodetect modconf block keyboard keymap filesystems)
-COMPRESSION="lz4"
-EOF
-
 # Chroot and configure
 print "Chroot and configure system"
 
@@ -131,7 +121,7 @@ arch-chroot /mnt /bin/bash -xe <<"EOF"
   source /etc/locale.conf
 
   # Generate Initramfs
-  mkinitcpio -P
+  mkinitcpio -p linux
 
   # Install bootloader
   bootctl --path=/boot install
