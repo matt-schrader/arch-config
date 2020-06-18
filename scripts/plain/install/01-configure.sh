@@ -41,12 +41,12 @@ exec 2> >(tee "stderr.log")
 # EFI part
 ### Setup the disk and partitions ###
 swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
-swap_end=$(( $swap_size + 129 + 1 ))MiB
+swap_end=$(( $swap_size + 512 + 1 ))MiB
 
 parted --script "${device}" -- mklabel gpt \
-  mkpart ESP fat32 1Mib 129MiB \
+  mkpart ESP fat32 1Mib 512MiB \
   set 1 boot on \
-  mkpart primary linux-swap 129MiB ${swap_end} \
+  mkpart primary linux-swap 512MiB ${swap_end} \
   mkpart primary ext4 ${swap_end} 100%
 
 # Simple globbing was not enough as on one device I needed to match /dev/mmcblk0p1
@@ -59,9 +59,9 @@ wipefs "${part_boot}"
 wipefs "${part_swap}"
 wipefs "${part_root}"
 
-mkfs.vfat -F32 "${part_boot}"
+mkfs.fat -F32 "${part_boot}"
 mkswap "${part_swap}"
-mkfs.f2fs -f "${part_root}"
+mkfs.ext4 -f "${part_root}"
 
 swapon "${part_swap}"
 mount "${part_root}" /mnt
@@ -79,7 +79,7 @@ pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-uco
 
 # Generate fstab 
 print "Generate fstab"
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U -p /mnt >> /mnt/etc/fstab
  
 # Set hostname
 echo "Please enter hostname :"
@@ -89,13 +89,6 @@ echo $hostname > /mnt/etc/hostname
 user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
 clear
 : ${user:?"user cannot be empty"}
-
-password=$(dialog --stdout --passwordbox "Enter admin password" 0 0) || exit 1
-clear
-: ${password:?"password cannot be empty"}
-password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || exit 1
-clear
-[[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
 # Configure /etc/hosts
 print "Configure hosts file"
@@ -149,13 +142,13 @@ arch-chroot /mnt /bin/bash -xe <<"EOF"
 default arch
 EOSF
 
-  cat > /boot/loader/entries/arch.conf <<"EOSF"
+EOF
+
+cat <<EOF > /mnt/boot/loader/entries/arch.conf
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
 options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
-EOSF
-
 EOF
 
 # Create user
