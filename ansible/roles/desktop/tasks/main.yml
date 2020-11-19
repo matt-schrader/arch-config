@@ -14,6 +14,7 @@
       - brightnessctl # brightness manager
       - swayidle
       - xdg-user-dirs
+      - ukui
     state: present
 
 - name: install video packages
@@ -64,6 +65,7 @@
       - papirus-icon-theme # icon theme
       - x2goclient 
       - youtube-dl
+      - libreoffice-still
     state: present
 
 - name: add missing gpg keys for aur

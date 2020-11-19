@@ -47,6 +47,7 @@
       - bind-tools         # dns tools
       - openbsd-netcat     # network utility
       - speedtest-cli      # 
+      - mosh
       # Utils
       - borgbackup         # backup utility
       - rsync              #

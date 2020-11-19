@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+
+  vars:
+    user: matthewschrader
+    shell: /usr/bin/fish
+    cmdline: ""
+
+  roles:
+    - { role: pacman, tags: pacman }
+    - { role: aur, tags: aur }
+    - { role: base, tags: base }
+    - { role: desktop, tags: desktop }
+    - { role: guest, tags: guest }
+    - { role: containers, tags: containers }
